@@ -6,37 +6,37 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require 'vendor/autoload.php';
 require 'dbHelper/dbhelper.php';
 
-$datetime = date('');
+$datetime = date('Y-m-d H:i:s');
 
-$date = date('');
+$date = date('Y-m-d');
 
 $app = new \Slim\App();
 
 $db = new dbHelper;
 
-// $app->get('/', function($request, $response, $args) {
-//     echo 'Hello, good people';
-// });
+
 
 $app->get('/', function(Request $request, Response $response, array $args) {
     $response->write('Hello, world!');
     return $response;
 });
 
-$app->get('/wasibi/', function(Request $request, Response $response, array $args) {
-    $response->write('Hello guy, dakun come here.');
-    return $response;
-});
 
-$app->get('/isUser/{name}/{surname}', function($request, $response, $args) {
-	$name = $args['name'];
-	$surname = $args['surname'];
-	$response->write("Hello ".$name." ".$surname);
-});
+//Api to register user on tractus.
+$app->post('/regUser', function($request, $response, $args) use($db, $datetime){
+	$name = $request->getParam('userName');
+	$email = $request->getParam('userEmail');
+	$phone = $request->getParam('userPhone');
+	$location = $request->getParam('userLocation');
+	$occupation = $request->getParam('userOcc');
 
-$app->get('/hello/{name}', function ($request, $response, $args) {
-    echo "Hello, " . $args['name'];
-})->setName('hello');
+	//Validation will be here
+
+	$result = $db->insert('users',array('u_name'=>"$name", 'u_phone'=>"$phone", 'u_email'=>"$email", 'u_location'=>"$location", 'u_type'=>"$occupation", 'u_reg_at'=>"$datetime"), array());
+
+	return json_encode($result);
+
+});
 
 $app->run();
 ?>

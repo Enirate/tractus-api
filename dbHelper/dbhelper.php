@@ -2,7 +2,7 @@
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'webauth');
+define('DB_NAME', 'the_tractus');
 
 // Database setting constants [DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD]
 class dbHelper {
