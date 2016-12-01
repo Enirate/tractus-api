@@ -38,5 +38,15 @@ $app->post('/regUser', function($request, $response, $args) use($db, $datetime){
 
 });
 
+//api responsible for sending complain to the database.
+$app->post('/complain', function($request, $response, $args) use($db, $datetime) {
+	$userId = $request->getParam('userId');
+	$userComplain = $request->getParam('userComplain');
+
+	$result = $db->insert('complaint', array('c_from'=>"$userId", 'c_message'=>"$userComplain", 'c_reg_at' => "$datetime"), array());
+
+	return json_encode($result);
+});
+
 $app->run();
 ?>
